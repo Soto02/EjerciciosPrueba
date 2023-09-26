@@ -57,6 +57,23 @@ namespace Actividad4
         public static int comprobarValorEnArray(int[] array, int valor)
         {
             //TODO
+
+            //Comprobamos si el array esta vacio
+            if (array.Length == 0)
+            {
+                valor == 5;
+                return valor;
+            }
+
+            //Recorremos el array
+            for (int i = 0; i < array.Length; i++ )
+            {
+                //Comprueba si el valor en la posicion actual es igual al valor buscado
+                if (array[i] == valor)
+                    //Si se encuentra el valor, devuelve la posicion i en el array
+                    return i;
+            }
+
             throw new NotImplementedException();
         }
 
