@@ -57,8 +57,55 @@ namespace Actividad4
         public static int comprobarValorEnArray(int[] array, int valor)
         {
             //TODO
+            //Encontramos la posicion del valor en el array
+            int posicion = Array.IndexOf(array, valor);    
+            
+            //Si se encuentra devuelve la posicion del valor en el array 
+            return posicion;
 
-            //Comprobamos si el array esta vacio
+            throw new NotImplementedException();
+        }
+
+        public static int calcularModa(int[] entrada)
+        {
+            //TODO
+            int numMax = entrada[0];
+
+            int i = 0;
+            while (i < entrada.Length)
+            {
+                int numVeces = 0;
+                int j = 0;
+                while (j < entrada.Length)
+                {
+                    if (entrada[j] == entrada[i])
+                    {
+                        numVeces++;
+                    }
+                    j++;
+                }
+
+                if (numVeces > numMax)
+                {
+                    numMax = entrada[i];
+                    numMax = numVeces;
+                }
+                i++;
+            }
+            return numMax;
+            throw new NotImplementedException();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+        /*Comprobamos si el array esta vacio
             if (array.Length == 0)
             {
                 valor == 5;
@@ -73,14 +120,4 @@ namespace Actividad4
                     //Si se encuentra el valor, devuelve la posicion i en el array
                     return i;
             }
-
-            throw new NotImplementedException();
-        }
-
-        public static int calcularModa(int[] entrada)
-        {
-            //TODO
-            throw new NotImplementedException();
-        }
-    }
-}
+        */
