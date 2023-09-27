@@ -58,66 +58,57 @@ namespace Actividad4
         {
             //TODO
             //Encontramos la posicion del valor en el array
-            int posicion = Array.IndexOf(array, valor);    
-            
+            int posicion = Array.IndexOf(array, valor);
+
             //Si se encuentra devuelve la posicion del valor en el array 
             return posicion;
-
             throw new NotImplementedException();
         }
 
         public static int calcularModa(int[] entrada)
         {
             //TODO
+            //Si el array esta vacio, devueve 0
+            if(entrada.Length == 0)
+            { 
+                return 0; 
+            }
+            //Declaramos la variable numMax(numero que mas veces aparece)
             int numMax = entrada[0];
-
+            //Declaramos la variable i
             int i = 0;
+            //Mientras que indice sea menos que la longitude del array entrada
             while (i < entrada.Length)
             {
+                //Declaramos numVeces que guarda el numero de veces que aparece un numero
                 int numVeces = 0;
                 int j = 0;
+                //Para j menor que entrada
                 while (j < entrada.Length)
                 {
+                    //Si array de j tiene el mismo valor de array de i
                     if (entrada[j] == entrada[i])
                     {
+                        //Implementamos numVeces
                         numVeces++;
                     }
+                    //Implementamos j
                     j++;
                 }
-
+                //si numVeces es mayor que numMax
                 if (numVeces > numMax)
                 {
+                    //Decimos que numMax es el array de indice i
                     numMax = entrada[i];
+                    //y que ahora, numMax sea igual al numVeces
                     numMax = numVeces;
                 }
+                //Implementamos i
                 i++;
             }
+            //Devolvemos el numMax
             return numMax;
             throw new NotImplementedException();
         }
     }
 }
-
-
-
-
-
-
-
-
-        /*Comprobamos si el array esta vacio
-            if (array.Length == 0)
-            {
-                valor == 5;
-                return valor;
-            }
-
-            //Recorremos el array
-            for (int i = 0; i < array.Length; i++ )
-            {
-                //Comprueba si el valor en la posicion actual es igual al valor buscado
-                if (array[i] == valor)
-                    //Si se encuentra el valor, devuelve la posicion i en el array
-                    return i;
-            }
-        */
