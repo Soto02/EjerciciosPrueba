@@ -29,7 +29,7 @@ namespace puntoSilla
                 for (int j = 0; j < matriz.GetLength(1); j++)
                 {
                     //Pedimos los valores
-                    Console.WriteLine("Introduzca los valores de la matriz: ");
+                    Console.WriteLine("Introduzca el valor de la fila " + i + " y de la columna " + j + ": ");
                     String valor = Console.ReadLine();           
                     matriz[i,j] = int.Parse(valor);
                     
