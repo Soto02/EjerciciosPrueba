@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Actividad5
@@ -16,10 +17,10 @@ namespace Actividad5
             foreach (var i in vs)
             {
                 resultado += i;
-                
+
             }
             return resultado;
-
+            
             throw new NotImplementedException();
         }
 
@@ -30,12 +31,11 @@ namespace Actividad5
             Array.Sort(vs);
             string resultado = "";
 
-            foreach(var i in vs)
+            foreach (var i in vs)
             {
                 resultado = resultado + i;
             }
             return resultado;
-
             throw new NotImplementedException();
         }
 
@@ -43,15 +43,15 @@ namespace Actividad5
         {
             //TODO
             int caracteres = 0;
-            
+
             foreach (var i in vs)
             {
                 foreach (var c in i)
                 {
-                    if (c == v) 
+                    if (c == v)
                     {
                         caracteres++;
-                    } 
+                    }
                 }
             }
             return caracteres;
@@ -63,7 +63,7 @@ namespace Actividad5
 
             //TODO
             int[] suma = new int[vs1.Length];
-            
+
             for (int i = 0; i < vs1.Length; i++)
             {
                 suma[i] = vs1[i] + vs2[i];
@@ -78,7 +78,7 @@ namespace Actividad5
             //TODO
             int[] multiplicacion = new int[vs1.Length];
 
-            for(int i = 0; i< vs1.Length; i++)
+            for (int i = 0; i < vs1.Length; i++)
             {
                 multiplicacion[i] = vs1[i] * vs2[i];
             }
@@ -93,21 +93,17 @@ namespace Actividad5
             bool esPalindromo = false;
 
             string sinEspacio = entrada.Replace(" ", "").ToLower();
-            string alReves = new string(entrada.Reverse().ToArray());
-            string cadenaReves = "";
+            string alReves = new string(sinEspacio.Reverse().ToArray());
 
-            for (int i = 0;i < alReves.Length;i++)
+            for (int i = 0; i < sinEspacio.Length; i++)
             {
-                cadenaReves += alReves[i];
-            }
-
-            if(alReves.Equals(sinEspacio))
-            {
-                esPalindromo = true;
+                if (alReves.Equals(sinEspacio))
+                {
+                    esPalindromo = true;
+                }
             }
 
             return esPalindromo;
-
             throw new NotImplementedException();
 
 
@@ -116,15 +112,15 @@ namespace Actividad5
         public static int contarPalabras(string entrada)
         {
             //TODO
-            int totalPalabras = 0;
-
-            for (int i = 0; i<entrada.Length; i++)
+            int palabras = 0;
+            
+            for (int i = 0; i < entrada.Length; i++)
             {
-                if (entrada[i] == entrada[i])
-                {
-
-                }
+                if (entrada[i] == ' ')
+                palabras++;
             }
+
+            return palabras;
 
             throw new NotImplementedException();
         }
@@ -132,7 +128,15 @@ namespace Actividad5
         public static int contarCaracteres(string entrada)
         {
             //TODO
+            int totalCaracteres = 0;
+            string sinEspacios = entrada.Replace(" ", "");
 
+            foreach(char i in sinEspacios)
+            {
+                totalCaracteres++;
+            }
+            return totalCaracteres;
+            
             throw new NotImplementedException();
         }
     }
