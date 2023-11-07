@@ -4,6 +4,8 @@
 
 package com.mycompany.piscinabuena;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author dam
@@ -39,5 +41,21 @@ public class PiscinaBuena {
                 new VentanaPiscina().setVisible(true);
             }
         });
+ }
+ 
+ private void LlenarLista() {
+     DefaultListModel modelo = new DefaultListModel();
+     modelo.add(0, "1.0");
+     modelo.add(1, "1.1");
+     modelo.add(2, "1.2");
+     modelo.add(3, "1.3");
+     modelo.add(4, "1.4");
+     modelo.add(5, "1.5");
+     modelo.add(6, "1.6");
+     modelo.add(7, "1.7");
+     modelo.add(8, "1.8");
+     modelo.add(9, "1.9");
+     modelo.add(10, "2.0");
+     
  }
 }
