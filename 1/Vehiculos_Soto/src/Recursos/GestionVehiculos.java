@@ -30,8 +30,13 @@ public class GestionVehiculos {
 		return cadenaEspacios;
 	}
 	
+        public ArrayList<Vehiculo> getVehiculos(){
+            return listaVehiculos;
+        }
+        
 	public boolean compara(String cadenaJugador)
-	{return cadena.equalsIgnoreCase(cadenaJugador);
-		}
+	{
+            return cadena.equalsIgnoreCase(cadenaJugador);
+        }
 
 }

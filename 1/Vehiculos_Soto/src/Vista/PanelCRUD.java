@@ -20,23 +20,17 @@ import Recursos.Vehiculo;
  */
 public class PanelCRUD extends javax.swing.JPanel {
 
+    private VentanaPrincipal ventana;
     private ControllerCRUD controller;
     
-       public PanelCRUD() {
+       public PanelCRUD(VentanaPrincipal ventana) {
         initComponents();
-        this.inicializarPanel();
-        //ControllerCRUD.cargarTabla(tablaVehiculos);
         
-    }
-
- 
-private void txtModeloActionPerformed(java.awt.event.ActionEvent evt) {										
- 
-	 // TODO add your handling code here:
- 
-}										
- 
- 
+        this.ventana = ventana;
+        this.inicializarPanel();
+        ControllerCRUD.cargarTabla(tablaVehiculos);
+        
+    } 
  
 private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {										
 
@@ -51,7 +45,9 @@ private void btModificarActionPerformed(java.awt.event.ActionEvent evt) {
  
 private void btEliminarActionPerformed(java.awt.event.ActionEvent evt) {
     
-    ControllerCRUD.eliminarVehiculo(this, tablaVehiculos);
+    String dato = ControllerCRUD.obtenerDato(tablaVehiculos);
+    String matricula = ControllerCRUD.obtenerMatricula(tablaVehiculos, dato);
+    ControllerCRUD.eliminarVehiculo(this, tablaVehiculos, matricula);
 }
 
 

@@ -42,6 +42,23 @@ public class ControllerCRUD
 
             tablaVehiculos.setModel(modelo);
 	}
+        
+        public static String obtenerDato(JTable tabla) {
+            String dato = String.valueOf(tabla.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()));
+            return dato;
+        }
+        
+        public static String obtenerMatricula(JTable table, String dato) {
+            String matricula = "";
+            for(int i = 0; i < table.getRowCount(); i++) {
+                for(int j = 0; j < table.getColumnCount(); j++) {
+                    if(table.getValueAt(j, j) == dato) {
+                        matricula = (String) table.getValueAt(1, 2);
+                    }
+                }
+            }
+            return matricula;
+        }
 	
 	
 	public static boolean insertarVehiculo( PanelCRUD frmVehiculo, JTable tablaVehiculos)
@@ -63,28 +80,11 @@ public class ControllerCRUD
         return insertado;		
 	}
         
-        public static boolean eliminarVehiculo(PanelCRUD frmVehiculo, JTable tablaVehiculos) 
+        public static boolean eliminarVehiculo(PanelCRUD frmVehiculo, JTable tablaVehiculos, String matricula) 
         {
             boolean eliminado= false;
             Vehiculo vehiculo=new Vehiculo();
             
-            for(int i = 0; i < tablaVehiculos.getRowCount(); i++) {
-                if(filaSeleccionada(tablaVehiculos, i) == true) {
-                    DAOVehiculoImpl.getInstance().eliminarVehiculo(vehiculo);
-                    eliminado = true;
-                }
-            }
             return eliminado;
-        }
-        
-        public static boolean filaSeleccionada(JTable tablaVehivulos, int index) {
-            boolean seleccionado = false;
-            
-            if(tablaVehivulos.getSelectedRow() >= -1) {
-                index = 1;
-                seleccionado = true;
-                
-            }
-            return seleccionado;
         }
 }

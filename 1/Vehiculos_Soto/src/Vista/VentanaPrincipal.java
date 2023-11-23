@@ -76,7 +76,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 			//this.getContentPane().removeAll();
 		if (panelActivo!=null)
 				panelActivo.setVisible(false);
-			panelActivo = new PanelCRUD();
+			panelActivo = new PanelCRUD(this);
 			panelActivo.setVisible(true);
 		   getContentPane().add(panelActivo);
 		 
@@ -96,4 +96,18 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		   
 		   }	
 	}
+        
+        public void cambiaPanel(JPanel panel) {
+            
+            panelActivo.setVisible(false);
+            this.getContentPane().remove(panelActivo);
+            panelActivo = panel;
+            
+            this.getContentPane().add(panelActivo);
+            panelActivo.setSize(this.getSize());
+            panelActivo.setVisible(true); 
+            
+            panelActivo.updateUI();
+         
+        }
 }
