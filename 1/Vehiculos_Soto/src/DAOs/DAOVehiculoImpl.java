@@ -27,10 +27,18 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
             }
 		return 1;
 	}
+        
+        @Override
+	public int eliminarVehiculo(Vehiculo vehiculo) {
+		
+            falsaBD.remove(vehiculo);
+            return 0;
+	}
 
 	@Override
 	public int eliminarVehiculo(String matricula) {
 		// TODO Auto-generated method stub
+                
 		return 0;
 	}
 
@@ -59,11 +67,6 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
 		return dao;
 	}
 
-	@Override
-	public int eliminarVehiculo(Vehiculo vehiculo) {
-		// TODO Auto-generated method stub
-                falsaBD.remove(vehiculo);
-		return 0;
-	}
+	
 
 }

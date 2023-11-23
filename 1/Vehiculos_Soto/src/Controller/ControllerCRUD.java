@@ -1,8 +1,5 @@
 package Controller;
 
-
-
-
 import java.util.List;
 
 import javax.swing.JTable;
@@ -14,12 +11,12 @@ import Vista.PanelCRUD;
 
 public class ControllerCRUD
 {
-
+    
 	public static void cargarTabla( JTable tablaVehiculos)
 	{ //DefaultTableModel modeloDeDatosTabla = (DefaultTableModel) tablaVehiculos.getModel();
-		List<Vehiculo> lstVehiculos = DAOVehiculoImpl.getInstance().getVehiculos();
+            List<Vehiculo> lstVehiculos = DAOVehiculoImpl.getInstance().getVehiculos();
 		
-		DefaultTableModel modelo=new DefaultTableModel();
+            DefaultTableModel modelo=new DefaultTableModel();
 
             modelo.addColumn("Marca");
 
@@ -66,28 +63,28 @@ public class ControllerCRUD
         return insertado;		
 	}
         
-        public static boolean EliminarVehiculo(PanelCRUD frmVehiculo, JTable tablaVehiculos) 
+        public static boolean eliminarVehiculo(PanelCRUD frmVehiculo, JTable tablaVehiculos) 
         {
-            boolean eliminado = false;
-            //String aEliminar;
-            //Vehiculo vehiculo = new Vehiculo();
-            
+            boolean eliminado= false;
             Vehiculo vehiculo=new Vehiculo();
-
-            vehiculo.setMarca(frmVehiculo.getTxtMarca().getText());
-
-            vehiculo.setModelo(frmVehiculo.getTxtModelo().getText());
-
-            vehiculo.setMatricula(frmVehiculo.getTxtMatricula().getText());
             
-            if(DAOVehiculoImpl.getInstance().eliminarVehiculo(vehiculo) !=0 ) {
-               
-                tablaVehiculos.remove(frmVehiculo.getTxtMatricula());
-                tablaVehiculos.remove(frmVehiculo.getTxtModelo());
-                tablaVehiculos.remove(frmVehiculo.getTxtMarca());
-                cargarTabla(tablaVehiculos);
-                 eliminado = true;
-            }       
+            for(int i = 0; i < tablaVehiculos.getRowCount(); i++) {
+                if(filaSeleccionada(tablaVehiculos, i) == true) {
+                    DAOVehiculoImpl.getInstance().eliminarVehiculo(vehiculo);
+                    eliminado = true;
+                }
+            }
             return eliminado;
+        }
+        
+        public static boolean filaSeleccionada(JTable tablaVehivulos, int index) {
+            boolean seleccionado = false;
+            
+            if(tablaVehivulos.getSelectedRow() >= -1) {
+                index = 1;
+                seleccionado = true;
+                
+            }
+            return seleccionado;
         }
 }

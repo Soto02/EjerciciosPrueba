@@ -5,6 +5,8 @@ import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
 
 import Controller.ControllerCRUD;
+import DAOs.DAOVehiculoImpl;
+import Recursos.Vehiculo;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,7 +40,7 @@ private void txtModeloActionPerformed(java.awt.event.ActionEvent evt) {
  
 private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {										
 
-    //DAOVehiculoImpl.getInstance().insertarVehiculo(new Vehiculo(txtMatricula.getText(), ))
+    //DAOVehiculoImpl.getInstance().insertarVehiculo(new Vehiculo(txtMatricula.getText(), txtModelo.getText(), txtMatricula.getText()));
     ControllerCRUD.insertarVehiculo(this, tablaVehiculos);
 
 }
@@ -49,7 +51,7 @@ private void btModificarActionPerformed(java.awt.event.ActionEvent evt) {
  
 private void btEliminarActionPerformed(java.awt.event.ActionEvent evt) {
     
-    ControllerCRUD.EliminarVehiculo(this, tablaVehiculos);
+    ControllerCRUD.eliminarVehiculo(this, tablaVehiculos);
 }
 
 
