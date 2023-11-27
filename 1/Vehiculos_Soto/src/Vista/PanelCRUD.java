@@ -197,22 +197,19 @@ private void inicializarPanel() {
  
 	 txtModelo.setName("modelo"); // NOI18N
  
-	 txtModelo.addActionListener(new java.awt.event.ActionListener() {
+	 //txtModelo.addActionListener(new java.awt.event.ActionListener() {
  
-		 public void actionPerformed(java.awt.event.ActionEvent evt) {
+		 //public void actionPerformed(java.awt.event.ActionEvent evt) {
  
-			 txtModeloActionPerformed(evt);
-		 }
-	 });
- 
- 
- 
+			 //txtModeloActionPerformed(evt);
+		 //}
+	 //});
+
 	 jLabel2.setText("Modelo");
  
 	 jLabelMatricula.setText("Matricula");
  
 	 txtMatricula.setToolTipText("");
- 
  
  
 	 btRegistrar.setText("Registrar");
@@ -270,6 +267,7 @@ private void inicializarPanel() {
 	 					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
 	 					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
 	 						.addComponent(btRegistrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(btModificar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 	 						.addComponent(btEliminar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 	 			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	 );
@@ -294,7 +292,9 @@ private void inicializarPanel() {
 	 						.addComponent(txtMatricula, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 	 				.addGroup(layout.createSequentialGroup()
 	 					.addGap(15)
-                                        .addComponent(btEliminar)))
+                                        .addComponent(btEliminar)
+                                                .addGap(15)
+                                        .addComponent(btModificar)))
 	 			.addGap(26)
 	 			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
 	 			.addContainerGap(32, Short.MAX_VALUE))

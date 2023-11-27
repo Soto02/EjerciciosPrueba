@@ -1,6 +1,7 @@
 package DAOs;
 
 
+import Recursos.Cliente;
 import java.util.List;
 
 import Recursos.Vehiculo;

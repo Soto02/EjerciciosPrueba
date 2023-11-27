@@ -14,7 +14,8 @@ import java.awt.event.ActionEvent;
 public class VentanaPrincipal extends JFrame implements ActionListener {
 
 	private JPanel panelActivo = null;
-	private JMenuItem itemAcerca, itemCRUD, itemSalir;
+        private JFrame frameActivo = null;
+	private JMenuItem itemAcerca, itemCRUD, itemSalir, itemCliente;
 	private JMenuItem itemJuego;
 
 	
@@ -35,6 +36,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		itemCRUD = new JMenuItem("CRUD");
 		MenuFile.add(itemCRUD);
 		itemCRUD.addActionListener(this);
+                
+                itemCliente = new JMenuItem("Cliente");
+                MenuFile.add(itemCliente);
+                itemCliente.addActionListener(this);
 		
 		itemJuego = new JMenuItem("Jugar");
 		MenuFile.add(itemJuego);
@@ -79,6 +84,18 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 			panelActivo = new PanelCRUD(this);
 			panelActivo.setVisible(true);
 		   getContentPane().add(panelActivo);
+		 
+		   this.setVisible(true);
+		   
+		   }
+                else if (e.getSource()== itemCliente)
+		{  System.out.println("llega");
+			//this.getContentPane().removeAll();
+		if (frameActivo!=null)
+				frameActivo.setVisible(false);
+			frameActivo = new PanelCliente();
+			frameActivo.setVisible(true);
+		   getContentPane().add(frameActivo);
 		 
 		   this.setVisible(true);
 		   

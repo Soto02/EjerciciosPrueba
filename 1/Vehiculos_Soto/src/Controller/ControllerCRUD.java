@@ -77,7 +77,7 @@ public class ControllerCRUD
                         insertado=true;
                         cargarTabla( tablaVehiculos);
                    }
-        return insertado;		
+            return insertado;		
 	}
         
         public static boolean eliminarVehiculo(PanelCRUD frmVehiculo, JTable tablaVehiculos, String matricula) 

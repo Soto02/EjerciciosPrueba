@@ -1,33 +1,33 @@
 package DAOs;
 
 
-import static DAOs.ConexionSQLServer.con;
-import static DAOs.ConexionSQLServer.rs;
 import static DAOs.ConexionSQLServer.cerrarSesion;
 import java.util.ArrayList;
 import java.util.List;
 import Recursos.Vehiculo;
-import java.sql.ResultSet;
+import static DAOs.ConexionSQLServer.connection;
+import static DAOs.ConexionSQLServer.result;
+import Recursos.Cliente;
 
 
 public class DAOVehiculoImpl implements IDAOVehiculo {
 	
-	private List<Vehiculo> falsaBD;
+	private List<Vehiculo> falsaBDVehiculo;
 	private static IDAOVehiculo dao=null; 
 
 	private DAOVehiculoImpl() {
 		super();
-                con = ConexionSQLServer.enlace(con);
-                rs = ConexionSQLServer.consulta();
-                this.falsaBD = ConexionSQLServer.imprimirConsulta(rs);
+                connection = ConexionSQLServer.enlace(connection);
+                result = ConexionSQLServer.consulta();
+                this.falsaBDVehiculo = ConexionSQLServer.imprimirConsulta(result);
             //this.falsaBD = new ArrayList<Vehiculo>();
 	}
 
 	@Override
 	public int insertarVehiculo(Vehiculo vehiculo) {
             if(!vehiculo.getMarca().isEmpty() && !vehiculo.getModelo().isEmpty() && !vehiculo.getMatricula().isEmpty()) {
-                falsaBD.add(vehiculo);
-                con = ConexionSQLServer.enlace(con);
+                falsaBDVehiculo.add(vehiculo);
+                connection = ConexionSQLServer.enlace(connection);
                 ConexionSQLServer.consultaInsertar(vehiculo);
                 cerrarSesion();
             }
@@ -39,13 +39,13 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
 	
             Vehiculo vehiculo = new Vehiculo();
             
-            for(int i = 0; i < falsaBD.size(); i++) {
-                if(falsaBD.get(i).getMatricula().equals(matricula) == true) {
-                    vehiculo = falsaBD.get(i);
-                    falsaBD.remove(vehiculo);
+            for(int i = 0; i < falsaBDVehiculo.size(); i++) {
+                if(falsaBDVehiculo.get(i).getMatricula().equals(matricula) == true) {
+                    vehiculo = falsaBDVehiculo.get(i);
+                    falsaBDVehiculo.remove(vehiculo);
                 }
             }
-            con = ConexionSQLServer.enlace(con);
+            connection = ConexionSQLServer.enlace(connection);
             ConexionSQLServer.consultaBorrar(matricula);
             cerrarSesion();
             
@@ -56,14 +56,14 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
         public int modificarVehiculo(Vehiculo vehiculo, int id) {
             int contador = 0;
             String matricula = "";
-            for(int i = 0; i < falsaBD.size(); i++) {
+            for(int i = 0; i < falsaBDVehiculo.size(); i++) {
                 if(i == id) {
-                    matricula = falsaBD.get(i).getMatricula();
-                    falsaBD.set(i,vehiculo);
+                    matricula = falsaBDVehiculo.get(i).getMatricula();
+                    falsaBDVehiculo.set(i,vehiculo);
                     contador++;
                 }
             }
-            con = ConexionSQLServer.enlace(con);
+            connection = ConexionSQLServer.enlace(connection);
             ConexionSQLServer.consultaModificar(vehiculo, matricula);
             cerrarSesion();
             return contador;
@@ -84,7 +84,7 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
 	@Override
 	public List<Vehiculo> getVehiculos() {
 		// TODO Auto-generated method stub
-		return this.falsaBD;
+		return this.falsaBDVehiculo;
 	}
 
 	
