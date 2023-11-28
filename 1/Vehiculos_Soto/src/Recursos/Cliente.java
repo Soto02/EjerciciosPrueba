@@ -2,6 +2,7 @@ package Recursos;
 
 public class Cliente {
     
+    private int id;
     private String nombre;
     private String dni;
     private String matricula;
@@ -9,12 +10,13 @@ public class Cliente {
     public Cliente() {
         
     }
-    public Cliente(String nombre, String dni, String matricula) {
-        this.nombre = nombre;
-        this.dni = dni;
-        this.matricula = matricula;
-    }
     
+    public int getId() {
+        return id;
+    }
+    public void setId() {
+        this.id = id;
+    }
     public String getNombre() {
         return nombre;
     }

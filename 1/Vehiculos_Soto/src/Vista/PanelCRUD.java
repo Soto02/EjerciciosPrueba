@@ -7,12 +7,9 @@ import javax.swing.LayoutStyle;
 import Controller.ControllerCRUD;
 import DAOs.DAOVehiculoImpl;
 import Recursos.Vehiculo;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,36 +17,167 @@ import Recursos.Vehiculo;
  */
 public class PanelCRUD extends javax.swing.JPanel {
 
-    private VentanaPrincipal ventana;
     private ControllerCRUD controller;
     
-       public PanelCRUD(VentanaPrincipal ventana) {
+       public PanelCRUD() {
         initComponents();
         
-        this.ventana = ventana;
         this.inicializarPanel();
-        ControllerCRUD.cargarTabla(tablaVehiculos);
-        
+        cargarTabla();       
     } 
+       
+    public void cargarTabla() {
+        String[] nombreColumnas = {"Marca","Modelo","Matricula"};
+        
+        DefaultTableModel modelo=new DefaultTableModel();
+        
+        ControllerCRUD vehiculoControlador = new ControllerCRUD();
+        List<Vehiculo> lstVehiculos = vehiculoControlador.listar();
+        
+        for(Vehiculo vehiculo:lstVehiculos)
+        {	 
+            Object[] dato = new Object[nombreColumnas.length];
+            
+            dato[0]= vehiculo.getMarca();
+
+            dato[1]= vehiculo.getModelo();
+
+            dato[2]=  vehiculo.getMatricula();
+
+            modelo.addRow(dato);
+        }
+        tablaVehiculos.setModel(modelo);
+    }
  
 private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {										
 
-    //DAOVehiculoImpl.getInstance().insertarVehiculo(new Vehiculo(txtMatricula.getText(), txtModelo.getText(), txtMatricula.getText()));
-    ControllerCRUD.insertarVehiculo(this, tablaVehiculos);
+    boolean validar = validarTxt();
+    
+    if(btRegistrar.getText().equals("Registrar")) {
+        if(validar == true) {
+        
+            Vehiculo vehiculo = new Vehiculo();
 
+            vehiculo.setMarca(txtMarca.getText());
+            vehiculo.setModelo(txtModelo.getText());
+            vehiculo.setMatricula(txtMatricula.getText());
+
+            DAOVehiculoImpl dao = new DAOVehiculoImpl();
+            boolean respuesta = dao.insertarVehiculo(vehiculo);
+
+            if(respuesta == true) {
+                JOptionPane.showMessageDialog(null, "Se registró correctamente.");
+
+                limpiarTxt();
+            } else {
+                JOptionPane.showMessageDialog(null, "Hubo un error al registrar el vehiculo.");
+            }
+
+            System.out.println("Se registró correctamente.");
+        }
+    } else {
+        if(validar == true) {
+            
+            datoVehiculo.setMarca(txtMarca.getText());
+            datoVehiculo.setModelo(txtModelo.getText());
+            datoVehiculo.setMatricula(txtMatricula.getText());
+
+            DAOVehiculoImpl dao = new DAOVehiculoImpl();
+            boolean respuesta = dao.modificarVehiculo(datoVehiculo);
+
+            if(respuesta == true) {
+                JOptionPane.showMessageDialog(null, "Se modificó correctamente.");
+
+                limpiarTxt();
+            } else {
+                JOptionPane.showMessageDialog(null, "Hubo un error al modificar el vehiculo.");
+            }
+
+            System.out.println("Se registró correctamente.");
+        }
+    }
+    
 }
 
 private void btModificarActionPerformed(java.awt.event.ActionEvent evt) {
-    //ControllerCRUD.
+    
+    Vehiculo vehiculo = new Vehiculo();
+    
+    int fila = tablaVehiculos.getSelectedRow();
+    
+    if(fila != -1) {
+        
+        vehiculo.setMarca(tablaVehiculos.getValueAt(fila, 0).toString());
+        vehiculo.setModelo(tablaVehiculos.getValueAt(fila, 1).toString());
+        vehiculo.setMatricula(tablaVehiculos.getValueAt(fila, 2).toString());
+    
+        System.out.println(vehiculo.toString());
+        
+        establecerDatos(vehiculo);
+        
+    } else {
+        JOptionPane.showMessageDialog(null, "Tiene que seleccionar un vehiculo de la tabla.");
+    }
+    
 }
  
 private void btEliminarActionPerformed(java.awt.event.ActionEvent evt) {
+   
+    int fila = tablaVehiculos.getSelectedRow();
     
-    String dato = ControllerCRUD.obtenerDato(tablaVehiculos);
-    String matricula = ControllerCRUD.obtenerMatricula(tablaVehiculos, dato);
-    ControllerCRUD.eliminarVehiculo(this, tablaVehiculos, matricula);
+    if(fila != -1) {
+        
+        String matricula = tablaVehiculos.getValueAt(fila, 2).toString();
+        
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Desae borrar el vehiculo?", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        
+        if(respuesta == 0) {
+            ControllerCRUD vehiculo = new ControllerCRUD();
+            
+            boolean respt = vehiculo.eliminarVehiculo(matricula);
+            if(respt) {
+                JOptionPane.showMessageDialog(null,"Se elimino correctamente.","Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,"hubo un error, no se pudo eliminar.","Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Tiene que seleccionar un vehiculo de la tabla.");
+    }
+    
+    
 }
 
+private void limpiarTxt() {
+    txtMarca.setText("");
+    txtModelo.setText("");
+    txtMatricula.setText("");
+}
+
+private boolean validarTxt() {
+    if(txtMarca.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "Introduzca la marca del vehiculo.");
+        return false;
+    } else if(txtModelo.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "Introduzca el modelo del vehiculo.");
+        return false;
+    } else if(txtMatricula.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "Introduzca la matricula del vehiculo.");
+        return false;
+    }
+    
+    return true;
+}
+
+Vehiculo datoVehiculo = null;
+
+public void establecerDatos(Vehiculo vehiculo) {
+    this.datoVehiculo = vehiculo;
+    
+    txtMarca.setText(datoVehiculo.getMarca());
+    txtModelo.setText(datoVehiculo.getModelo());
+    txtMatricula.setText(datoVehiculo.getMatricula());
+}
 
  
  

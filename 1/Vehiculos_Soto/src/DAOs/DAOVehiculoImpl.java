@@ -1,74 +1,142 @@
 package DAOs;
 
-
-import static DAOs.ConexionSQLServer.cerrarSesion;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.List;
 import Recursos.Vehiculo;
-import static DAOs.ConexionSQLServer.connection;
-import static DAOs.ConexionSQLServer.result;
-import Recursos.Cliente;
+import DAOs.ConexionSQLServer.*;
+import java.util.ArrayList;
+//import com.sun.jdi.connect.spi.Connection;
 
 
 public class DAOVehiculoImpl implements IDAOVehiculo {
 	
+    private ConexionSQLServer fabricaConexion;
 	private List<Vehiculo> falsaBDVehiculo;
-	private static IDAOVehiculo dao=null; 
+	private IDAOVehiculo dao=null; 
 
-	private DAOVehiculoImpl() {
-		super();
-                connection = ConexionSQLServer.enlace(connection);
-                result = ConexionSQLServer.consulta();
-                this.falsaBDVehiculo = ConexionSQLServer.imprimirConsulta(result);
+	public DAOVehiculoImpl() {
+            super();
+            this.fabricaConexion = new ConexionSQLServer();
+                
+            //connection = ConexionSQLServer.enlace(connection);
+            //result = ConexionSQLServer.consulta();
+            //this.falsaBDVehiculo = ConexionSQLServer.imprimirConsulta(result);
             //this.falsaBD = new ArrayList<Vehiculo>();
 	}
-
-	@Override
-	public int insertarVehiculo(Vehiculo vehiculo) {
-            if(!vehiculo.getMarca().isEmpty() && !vehiculo.getModelo().isEmpty() && !vehiculo.getMatricula().isEmpty()) {
-                falsaBDVehiculo.add(vehiculo);
-                connection = ConexionSQLServer.enlace(connection);
-                ConexionSQLServer.consultaInsertar(vehiculo);
-                cerrarSesion();
-            }
-		return 1;
-	}
         
         @Override
-	public int eliminarVehiculo(String matricula) {
-	
-            Vehiculo vehiculo = new Vehiculo();
+        public List<Vehiculo> listar() {
+            List<Vehiculo> listaVehiculos = new ArrayList<>();
             
-            for(int i = 0; i < falsaBDVehiculo.size(); i++) {
-                if(falsaBDVehiculo.get(i).getMatricula().equals(matricula) == true) {
-                    vehiculo = falsaBDVehiculo.get(i);
-                    falsaBDVehiculo.remove(vehiculo);
+            try {
+                String sql = "SELECT * from vehiculo;";
+                
+                Connection connection = this.fabricaConexion.getConnection();
+                
+                PreparedStatement sentencia = connection.prepareStatement(sql);
+                
+                ResultSet resultado = sentencia.executeQuery();
+                
+                while(resultado.next()) {
+                    
+                    Vehiculo vehiculo = new Vehiculo();
+                    
+                    vehiculo.setId(resultado.getInt(1));
+                    vehiculo.setMarca(resultado.getString(2));
+                    vehiculo.setModelo(resultado.getString(3));
+                    vehiculo.setMatricula(resultado.getString(4));
+                    
+                    listaVehiculos.add(vehiculo);
                 }
+                
+                resultado.close();
+                sentencia.close();
+                connection.close();
+                
+            } catch (Exception e) {
+                System.out.println("Hubo un error al listar los vehiculos.");
             }
-            connection = ConexionSQLServer.enlace(connection);
-            ConexionSQLServer.consultaBorrar(matricula);
-            cerrarSesion();
-            
-            return 1;
-	}
-        
-        @Override
-        public int modificarVehiculo(Vehiculo vehiculo, int id) {
-            int contador = 0;
-            String matricula = "";
-            for(int i = 0; i < falsaBDVehiculo.size(); i++) {
-                if(i == id) {
-                    matricula = falsaBDVehiculo.get(i).getMatricula();
-                    falsaBDVehiculo.set(i,vehiculo);
-                    contador++;
-                }
-            }
-            connection = ConexionSQLServer.enlace(connection);
-            ConexionSQLServer.consultaModificar(vehiculo, matricula);
-            cerrarSesion();
-            return contador;
+            return listaVehiculos;
         }
 
+	@Override
+	public boolean insertarVehiculo(Vehiculo vehiculo) {
+            
+            try {
+                
+                String sql = "INSERT INTO vehiculo(marca, modelo, matricula) VALUES(?,?,?);";
+                
+                Connection connection = (Connection) this.fabricaConexion.getConnection();
+                
+                PreparedStatement sentencia = connection.prepareStatement(sql);
+                
+                sentencia.setString(1, vehiculo.getMarca());
+                sentencia.setString(2, vehiculo.getModelo());
+                sentencia.setString(3, vehiculo.getMatricula());
+                
+                sentencia.executeUpdate();
+                sentencia.close();
+                connection.close();
+                
+                return true;
+                
+            } catch(Exception e) {
+                System.out.println("hubo un error en el proceso de registrar un vehiculo.");
+                return false;
+            }
+	}
+        
+        @Override
+        public boolean modificarVehiculo(Vehiculo vehiculo) {
+            
+            try {
+                String sql = "UPDATE vehiculo SET marca=?, modelo=?, matricula=? WHERE id=?;";
+                
+                Connection connection = this.fabricaConexion.getConnection();
+                PreparedStatement sentencia = connection.prepareStatement(sql);
+                
+                sentencia.setString(0, vehiculo.getMarca());
+                sentencia.setString(1, vehiculo.getModelo());
+                sentencia.setString(2, vehiculo.getMatricula());
+                
+                sentencia.setInt(3, vehiculo.getId());
+                
+                sentencia.executeUpdate();
+                sentencia.close();
+                connection.close();
+                
+                return true;
+                
+            } catch (Exception e) {
+                System.out.println("Hubo un error al modificar el vehiculo.");
+                return false;
+            }
+        }
+
+        @Override
+	public boolean eliminarVehiculo(String matricula) {
+            
+            try {
+                String sql = "DELETE FROM vehiculo WHERE matricula=?;";
+                
+                Connection connection = this.fabricaConexion.getConnection();
+                PreparedStatement sentencia = connection.prepareStatement(sql);
+                
+                sentencia.setString(2, matricula);
+                
+                sentencia.executeUpdate();
+                sentencia.close();
+                connection.close();
+                
+                return true;
+                    
+            } catch (Exception e) {
+                System.out.println("Hubo un error al eliminar el vehiculo.");
+                return false;
+            }
+	}
 	@Override
 	public int eliminarVehiculos(List<Vehiculo> lstVehiculos) {
 		
@@ -88,7 +156,7 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
 	}
 
 	
-	public static IDAOVehiculo getInstance() {
+	public IDAOVehiculo getInstance() {
 	  if (dao== null) dao =new DAOVehiculoImpl();
 	  
 		return dao;

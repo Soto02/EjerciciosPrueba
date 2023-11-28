@@ -3,7 +3,6 @@ package Controller;
 import java.util.List;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import DAOs.DAOVehiculoImpl;
 import Recursos.Vehiculo;
@@ -11,39 +10,57 @@ import Vista.PanelCRUD;
 
 public class ControllerCRUD
 {
+    private DAOVehiculoImpl dao;
     
-	public static void cargarTabla( JTable tablaVehiculos)
-	{ //DefaultTableModel modeloDeDatosTabla = (DefaultTableModel) tablaVehiculos.getModel();
-            List<Vehiculo> lstVehiculos = DAOVehiculoImpl.getInstance().getVehiculos();
-		
-            DefaultTableModel modelo=new DefaultTableModel();
-
-            modelo.addColumn("Marca");
-
-            modelo.addColumn("Modelo");
-
-            modelo.addColumn("Matricula");
-
-            Object[] registroLeido = new Object [3];
-
-            for(Vehiculo vehiculo:lstVehiculos)
-
-            {	 
-
-                           registroLeido[0]= vehiculo.getMarca();
-
-                           registroLeido[1]= vehiculo.getModelo();
-
-                           registroLeido[2]=  vehiculo.getMatricula();
-
-                    modelo.addRow(registroLeido);
-
-            }
-
-            tablaVehiculos.setModel(modelo);
+    public ControllerCRUD() {
+        this.dao = new DAOVehiculoImpl();
+    }
+        
+        public List<Vehiculo> listar() {
+            List<Vehiculo> lstVehiculos = this.dao.listar();
+            return lstVehiculos;
+        }
+	
+	
+	public boolean insertarVehiculo( Vehiculo vehiculo, PanelCRUD frmVehiculo, JTable tablaVehiculos)
+	{ 
+            boolean insertado= this.dao.insertarVehiculo(vehiculo);
+            
+            return insertado;		
 	}
         
-        public static String obtenerDato(JTable tabla) {
+        public boolean modificarVehiculo(Vehiculo vehiculo) 
+        {
+            boolean modificado = this.dao.modificarVehiculo(vehiculo);
+            
+            return modificado;
+        }
+        
+        public boolean eliminarVehiculo(String matricula) 
+        {
+            boolean eliminado = this.dao.eliminarVehiculo(matricula);
+            
+            return eliminado;
+        }
+}
+
+/*
+Vehiculo vehiculo=new Vehiculo();
+
+            vehiculo.setMarca(frmVehiculo.getTxtMarca().getText());
+
+            vehiculo.setModelo(frmVehiculo.getTxtModelo().getText());
+
+            vehiculo.setMatricula(frmVehiculo.getTxtMatricula().getText());
+
+                   if (DAOVehiculoImpl.getInstance().insertarVehiculo(vehiculo)!=0)
+                   {
+                        insertado=true;
+                        cargarTabla( tablaVehiculos);
+                   }
+*/
+/*
+public static String obtenerDato(JTable tabla) {
             String dato = String.valueOf(tabla.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()));
             return dato;
         }
@@ -59,32 +76,36 @@ public class ControllerCRUD
             }
             return matricula;
         }
-	
-	
-	public static boolean insertarVehiculo( PanelCRUD frmVehiculo, JTable tablaVehiculos)
-	{ 
-            boolean insertado=false;
-            Vehiculo vehiculo=new Vehiculo();
+*/
+/*
+public void cargarTabla( JTable tablaVehiculos)
+	{ //DefaultTableModel modeloDeDatosTabla = (DefaultTableModel) tablaVehiculos.getModel();
+            //List<Vehiculo> lstVehiculos = DAOVehiculoImpl.getInstance().getVehiculos();
+            List<Vehiculo> lstVehiculos = this.dao.listar();
+		
+            DefaultTableModel modelo=new DefaultTableModel();
 
-            vehiculo.setMarca(frmVehiculo.getTxtMarca().getText());
+            modelo.addColumn("Marca");
 
-            vehiculo.setModelo(frmVehiculo.getTxtModelo().getText());
+            modelo.addColumn("Modelo");
 
-            vehiculo.setMatricula(frmVehiculo.getTxtMatricula().getText());
+            modelo.addColumn("Matricula");
 
-                   if (DAOVehiculoImpl.getInstance().insertarVehiculo(vehiculo)!=0)
-                   {
-                        insertado=true;
-                        cargarTabla( tablaVehiculos);
-                   }
-            return insertado;		
-	}
-        
-        public static boolean eliminarVehiculo(PanelCRUD frmVehiculo, JTable tablaVehiculos, String matricula) 
-        {
-            boolean eliminado= false;
-            Vehiculo vehiculo=new Vehiculo();
-            
-            return eliminado;
-        }
-}
+            Object[] registroLeido = new Object [3];
+
+            for(Vehiculo vehiculo:lstVehiculos)
+            {	 
+
+                           registroLeido[0]= vehiculo.getMarca();
+
+                           registroLeido[1]= vehiculo.getModelo();
+
+                           registroLeido[2]=  vehiculo.getMatricula();
+
+                    modelo.addRow(registroLeido);
+
+            }
+
+            tablaVehiculos.setModel(modelo);
+	}SS
+*/
