@@ -31,28 +31,33 @@ public class ControllerCliente {
 
             Object[] registroLeido = new Object [3];
 
-            for(Cliente vehiculo:lstCliente)
+            for(Cliente cliente:lstCliente)
 
             {	 
+                        registroLeido[0]= cliente.getNombre();
 
-                           registroLeido[0]= vehiculo.getNombre();
+                        registroLeido[1]= cliente.getDni();
 
-                           registroLeido[1]= vehiculo.getDni();
+                        registroLeido[2]=  cliente.getMatricula();
 
-                           registroLeido[2]=  vehiculo.getMatricula();
-
-                    modelo.addRow(registroLeido);
-
+                modelo.addRow(registroLeido);
             }
-
             tablaClientes.setModel(modelo);
 	}
     
     public static boolean insertarCliente( PanelCRUDCliente frmCliente, JTable tablaClientes) 
     {
-        boolean insrtado = false;
+        boolean insertado = false;
         Cliente cliente = new Cliente();
         
-        cliente.setNombre(frmCliente)
+        cliente.setNombre(frmCliente.getTxtNombre().getText());
+        cliente.setDni(frmCliente.getTxtDni().getText());
+        cliente.setMatricula(frmCliente.getTxtMatricula().getText());
+        
+        if(DAOClienteImpl.getInstance().insertarCliente(cliente) != 0) {
+            insertado = true;
+            cargarTabla(tablaClientes);
+        }
+        return insertado;
     }
 }

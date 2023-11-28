@@ -91,11 +91,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
                 else if (e.getSource()== itemCliente)
 		{  System.out.println("llega");
 			//this.getContentPane().removeAll();
-		if (frameActivo!=null)
-				frameActivo.setVisible(false);
-			frameActivo = new PanelCliente();
-			frameActivo.setVisible(true);
-		   getContentPane().add(frameActivo);
+		if (panelActivo!=null)
+				panelActivo.setVisible(false);
+			panelActivo = new PanelCRUDCliente(this);
+			panelActivo.setVisible(true);
+		   getContentPane().add(panelActivo);
 		 
 		   this.setVisible(true);
 		   

@@ -8,7 +8,6 @@ package DAOs;
  *
  * @author dam
  */
-import Recursos.Cliente;
 import Recursos.Vehiculo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
