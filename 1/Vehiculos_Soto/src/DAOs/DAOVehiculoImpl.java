@@ -152,14 +152,13 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
 
 	@Override
 	public List<Vehiculo> getVehiculos() {
-		// TODO Auto-generated method stub
 		return this.falsaBDVehiculo;
 	}
 
 	
 	public IDAOVehiculo getInstance() {
-	  if (dao== null) dao =new DAOVehiculoImpl();
+            if (dao== null) dao =new DAOVehiculoImpl();
 	  
-		return dao;
+            return dao;
 	}
 }

@@ -8,40 +8,36 @@ import DAOs.DAOVehiculoImpl;
 import Recursos.Vehiculo;
 import Vista.PanelCRUD;
 
-public class ControllerCRUD
-{
+public class ControllerCRUD {
+
     private DAOVehiculoImpl dao;
-    
+
     public ControllerCRUD() {
         this.dao = new DAOVehiculoImpl();
     }
-        
-        public List<Vehiculo> listar() {
-            List<Vehiculo> lstVehiculos = this.dao.listar();
-            return lstVehiculos;
-        }
-	
-	
-	public boolean insertarVehiculo( Vehiculo vehiculo, PanelCRUD frmVehiculo, JTable tablaVehiculos)
-	{ 
-            boolean insertado= this.dao.insertarVehiculo(vehiculo);
-            
-            return insertado;		
-	}
-        
-        public boolean modificarVehiculo(Vehiculo vehiculo) 
-        {
-            boolean modificado = this.dao.modificarVehiculo(vehiculo);
-            
-            return modificado;
-        }
-        
-        public boolean eliminarVehiculo(String matricula) 
-        {
-            boolean eliminado = this.dao.eliminarVehiculo(matricula);
-            
-            return eliminado;
-        }
+
+    public List<Vehiculo> listar() {
+        List<Vehiculo> lstVehiculos = this.dao.listar();
+        return lstVehiculos;
+    }
+
+    public boolean insertarVehiculo(Vehiculo vehiculo, PanelCRUD frmVehiculo, JTable tablaVehiculos) {
+        boolean insertado = this.dao.insertarVehiculo(vehiculo);
+
+        return insertado;
+    }
+
+    public boolean modificarVehiculo(Vehiculo vehiculo) {
+        boolean modificado = this.dao.modificarVehiculo(vehiculo);
+
+        return modificado;
+    }
+
+    public boolean eliminarVehiculo(String matricula) {
+        boolean eliminado = this.dao.eliminarVehiculo(matricula);
+
+        return eliminado;
+    }
 }
 
 /*
@@ -58,8 +54,8 @@ Vehiculo vehiculo=new Vehiculo();
                         insertado=true;
                         cargarTabla( tablaVehiculos);
                    }
-*/
-/*
+ */
+ /*
 public static String obtenerDato(JTable tabla) {
             String dato = String.valueOf(tabla.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()));
             return dato;
@@ -76,8 +72,8 @@ public static String obtenerDato(JTable tabla) {
             }
             return matricula;
         }
-*/
-/*
+ */
+ /*
 public void cargarTabla( JTable tablaVehiculos)
 	{ //DefaultTableModel modeloDeDatosTabla = (DefaultTableModel) tablaVehiculos.getModel();
             //List<Vehiculo> lstVehiculos = DAOVehiculoImpl.getInstance().getVehiculos();
@@ -108,4 +104,4 @@ public void cargarTabla( JTable tablaVehiculos)
 
             tablaVehiculos.setModel(modelo);
 	}SS
-*/
+ */

@@ -2,19 +2,19 @@ package Controller;
 
 
 import javax.swing.JOptionPane;
-import Recursos.GestionVehiculos;
+import Recursos.GestionVehiculo;
 import Vista.PanelJuego;
 
 public class ControllerJuego{
 	
-	private GestionVehiculos gestionVehiculos;
+	private GestionVehiculo gestionVehiculos;
 	
 	private PanelJuego panelJuego;
 	
 	public ControllerJuego(PanelJuego panelJuego) 
 	{
 		
-		gestionVehiculos = new GestionVehiculos();
+		gestionVehiculos = new GestionVehiculo();
 		this.panelJuego= panelJuego;
 	}
 
