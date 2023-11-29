@@ -31,7 +31,7 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
             List<Vehiculo> listaVehiculos = new ArrayList<>();
             
             try {
-                String sql = "SELECT * from vehiculo;";
+                String sql = "SELECT * from vehiculos";
                 
                 Connection connection = this.fabricaConexion.getConnection();
                 
@@ -43,10 +43,10 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
                     
                     Vehiculo vehiculo = new Vehiculo();
                     
-                    vehiculo.setId(resultado.getInt(1));
-                    vehiculo.setMarca(resultado.getString(2));
-                    vehiculo.setModelo(resultado.getString(3));
-                    vehiculo.setMatricula(resultado.getString(4));
+                    //vehiculo.setId(resultado.getInt(0));
+                    vehiculo.setMarca(resultado.getString(1));
+                    vehiculo.setModelo(resultado.getString(2));
+                    vehiculo.setMatricula(resultado.getString(3));
                     
                     listaVehiculos.add(vehiculo);
                 }
@@ -57,6 +57,7 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
                 
             } catch (Exception e) {
                 System.out.println("Hubo un error al listar los vehiculos.");
+                e.printStackTrace();
             }
             return listaVehiculos;
         }
@@ -66,7 +67,7 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
             
             try {
                 
-                String sql = "INSERT INTO vehiculo(marca, modelo, matricula) VALUES(?,?,?);";
+                String sql = "INSERT INTO vehiculos(marca, modelo, matricula) VALUES(?,?,?)";
                 
                 Connection connection = (Connection) this.fabricaConexion.getConnection();
                 
@@ -83,7 +84,8 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
                 return true;
                 
             } catch(Exception e) {
-                System.out.println("hubo un error en el proceso de registrar un vehiculo.");
+                System.out.println("Hubo un error en el proceso de registrar un vehiculo.");
+                e.printStackTrace();
                 return false;
             }
 	}
@@ -92,7 +94,7 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
         public boolean modificarVehiculo(Vehiculo vehiculo) {
             
             try {
-                String sql = "UPDATE vehiculo SET marca=?, modelo=?, matricula=? WHERE id=?;";
+                String sql = "UPDATE vehiculos SET marca=?, modelo=? WHERE matricula=?";
                 
                 Connection connection = this.fabricaConexion.getConnection();
                 PreparedStatement sentencia = connection.prepareStatement(sql);
@@ -100,8 +102,6 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
                 sentencia.setString(0, vehiculo.getMarca());
                 sentencia.setString(1, vehiculo.getModelo());
                 sentencia.setString(2, vehiculo.getMatricula());
-                
-                sentencia.setInt(3, vehiculo.getId());
                 
                 sentencia.executeUpdate();
                 sentencia.close();
@@ -119,12 +119,12 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
 	public boolean eliminarVehiculo(String matricula) {
             
             try {
-                String sql = "DELETE FROM vehiculo WHERE matricula=?;";
+                String sql = "DELETE FROM vehiculos WHERE matricula=?";
                 
                 Connection connection = this.fabricaConexion.getConnection();
                 PreparedStatement sentencia = connection.prepareStatement(sql);
                 
-                sentencia.setString(2, matricula);
+                sentencia.setString(1, matricula);
                 
                 sentencia.executeUpdate();
                 sentencia.close();
@@ -134,6 +134,7 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
                     
             } catch (Exception e) {
                 System.out.println("Hubo un error al eliminar el vehiculo.");
+                e.printStackTrace();
                 return false;
             }
 	}

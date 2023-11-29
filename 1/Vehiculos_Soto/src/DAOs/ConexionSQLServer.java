@@ -21,7 +21,7 @@ public class ConexionSQLServer {
     private String usuario = "root";
     private String contraseña = "dam1";
     
-    private String driver = "com.mysql.jdbc.Driver";
+    private String driver = "com.mysql.cj.jdbc.Driver";
 
     public ConexionSQLServer() {
         try {

@@ -29,8 +29,10 @@ public class PanelCRUD extends javax.swing.JPanel {
     public void cargarTabla() {
         String[] nombreColumnas = {"Marca","Modelo","Matricula"};
         
-        DefaultTableModel modelo=new DefaultTableModel();
-        
+        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculos.getModel();
+        modelo.addColumn("Marca");
+        modelo.addColumn("Modelo");
+        modelo.addColumn("Matricula");
         ControllerCRUD vehiculoControlador = new ControllerCRUD();
         List<Vehiculo> lstVehiculos = vehiculoControlador.listar();
         
@@ -67,7 +69,7 @@ private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
 
             if(respuesta == true) {
                 JOptionPane.showMessageDialog(null, "Se registró correctamente.");
-
+                cargarTabla();
                 limpiarTxt();
             } else {
                 JOptionPane.showMessageDialog(null, "Hubo un error al registrar el vehiculo.");
@@ -114,11 +116,7 @@ private void btModificarActionPerformed(java.awt.event.ActionEvent evt) {
         System.out.println(vehiculo.toString());
         
         establecerDatos(vehiculo);
-        
-    } else {
-        JOptionPane.showMessageDialog(null, "Tiene que seleccionar un vehiculo de la tabla.");
-    }
-    
+    }  
 }
  
 private void btEliminarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,8 +135,9 @@ private void btEliminarActionPerformed(java.awt.event.ActionEvent evt) {
             boolean respt = vehiculo.eliminarVehiculo(matricula);
             if(respt) {
                 JOptionPane.showMessageDialog(null,"Se elimino correctamente.","Exito", JOptionPane.INFORMATION_MESSAGE);
+                limpiarTxt();
             } else {
-                JOptionPane.showMessageDialog(null,"hubo un error, no se pudo eliminar.","Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Hubo un error, no se pudo eliminar.","Error", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     } else {
@@ -300,18 +299,8 @@ private void inicializarPanel() {
  
 	 tablaVehiculos.setModel(new javax.swing.table.DefaultTableModel(
  
-		 new Object [][] {
-                     
-			 {null, null, null}
- 
-		 },
- 
-		 new String [] {
- 
-			 "Marca", "Modelo", "Matricula"
- 
-		 }
- 
+		
+
 	 ));
  
 	 jScrollPane1.setViewportView(tablaVehiculos);

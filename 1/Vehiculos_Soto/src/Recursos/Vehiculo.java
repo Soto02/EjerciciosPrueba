@@ -2,7 +2,6 @@ package Recursos;
 
 public class Vehiculo {
 
-private int id;
 private String marca;
 private String modelo;
 private String matricula;
@@ -10,14 +9,6 @@ private String matricula;
 public Vehiculo() {
 	
 
-}
-
-public int getId() {
-    return id;
-}
-
-public void setId(int id) {
-    this.id = id;
 }
 
 public String getMarca() {
