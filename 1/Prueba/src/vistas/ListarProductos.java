@@ -5,6 +5,8 @@
 package vistas;
 
 import Controller.ProductoControlador;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -380,6 +382,10 @@ public class ListarProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuitarFiltroActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        
+        List<ProductoModelo> listaProductos = new ArrayList<>();
+        
+        Collections.sort(listaProductos, (ProductoModelo p1, ProductoModelo p2)-> p1.getNombre().compareTo(p2.getNombre()));
         
     }//GEN-LAST:event_btnConsultarActionPerformed
 
