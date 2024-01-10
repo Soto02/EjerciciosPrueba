@@ -2,25 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAOs;
+package conexion;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 /**
  *
- * @author dam
+ * @author alexs
  */
-import java.sql.*;
-
-//Gestion vecinos
-public class ConexionSQLServer {
+public class ConexionMysql {
     
-    private Connection connection;
+    private Connection connection = null;
     private String url = "jdbc:mysql://localhost:3306/db_crud_java_swing";
     private String usuario = "mysqlexamen";
     private String contraseña = "123456";
     
-    private String driver = "com.mysql.cj.jdbc.Driver";//com.mysql.cj.jdbc.Driver
-    
-    public ConexionSQLServer() {
+    private String driver = "com.mysql.cj.jdbc.Driver";
+
+    public ConexionMysql() {
         try {
             Class.forName(driver);
             
@@ -33,8 +33,6 @@ public class ConexionSQLServer {
         } catch(Exception e) {
             
             System.out.println("Hubo un error en la conexión.");
-            System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -44,6 +42,6 @@ public class ConexionSQLServer {
 
     public static void main(String[] args) {
         
-        ConexionSQLServer conexion = new ConexionSQLServer();
+        ConexionMysql conexion = new ConexionMysql();
     }
 }
